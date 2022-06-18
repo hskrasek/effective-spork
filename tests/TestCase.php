@@ -2,18 +2,23 @@
 
 namespace HSkrasek\ModelMigrator\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use HSkrasek\ModelMigrator\ModelMigratorServiceProvider;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'HSkrasek\\ModelMigrator\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'HSkrasek\\ModelMigrator\\Database\\Factories\\' . class_basename(
+                $modelName
+            ) . 'Factory'
         );
     }
 
@@ -27,10 +32,10 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+    }
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_model-migrator_table.php.stub';
-        $migration->up();
-        */
+    protected function defineDatabaseMigrations()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
     }
 }
