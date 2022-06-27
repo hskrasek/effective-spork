@@ -2,9 +2,9 @@
 
 namespace HSkrasek\ModelMigrator;
 
+use HSkrasek\ModelMigrator\Commands\ModelMigratorCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use HSkrasek\ModelMigrator\Commands\ModelMigratorCommand;
 
 class ModelMigratorServiceProvider extends PackageServiceProvider
 {
@@ -17,9 +17,7 @@ class ModelMigratorServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('model-migrator')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_model-migrator_table')
-            ->hasCommand(ModelMigratorCommand::class);
+            ->hasCommand(ModelMigratorCommand::class)
+            ->hasConfigFile();
     }
 }
