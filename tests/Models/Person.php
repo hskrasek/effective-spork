@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace HSkrasek\ModelMigrator\Tests\Models;
 
-use HSkrasek\ModelMigrator\Migratable;
+use HSkrasek\ModelMigrator\Contracts\Migratable;
+use HSkrasek\ModelMigrator\MigratesModel;
 use Illuminate\Database\Eloquent\Model;
 
-class Person extends Model
+class Person extends Model implements Migratable
 {
-    use Migratable;
+    use MigratesModel;
 
     protected $table = 'persons';
 

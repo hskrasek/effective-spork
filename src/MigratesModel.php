@@ -7,23 +7,23 @@ namespace HSkrasek\ModelMigrator;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @template T of Model
- * @property-read class-string<T> $targetModel
+ * @property-read class-string<Model> $targetModel
  * @property-read array<string, string> $migratableAttributes
  */
-trait Migratable
+trait MigratesModel
 {
-    /**
-     * @return T
-     */
     public function migrate(): Model
     {
         if (!isset($this->targetModel)) {
-            throw new \InvalidArgumentException('Unable to migrate ' . get_class($this) . '. Missing required target model.');
+            throw new \InvalidArgumentException(
+                'Unable to migrate ' . get_class($this) . '. Missing required target model.'
+            );
         }
 
         if (empty($this->migratableAttributes)) {
-            throw new \InvalidArgumentException('Unable to migrate ' . get_class($this) . '. Migration attribute mapping missing.');
+            throw new \InvalidArgumentException(
+                'Unable to migrate ' . get_class($this) . '. Migration attribute mapping missing.'
+            );
         }
 
         $attributes = [];

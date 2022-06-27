@@ -1,6 +1,6 @@
 <?php
 
-use HSkrasek\ModelMigrator\Migratable;
+use HSkrasek\ModelMigrator\MigratesModel;
 use HSkrasek\ModelMigrator\Tests\Models\Person;
 
 use HSkrasek\ModelMigrator\Tests\Models\User;
@@ -11,14 +11,14 @@ use function Pest\Faker\faker;
 
 it('throws an exception when a target model has not been defined', function () {
     $model = new class () extends Model {
-        use Migratable;
+        use MigratesModel;
     };
     $model->migrate();
 })->throws(InvalidArgumentException::class, );
 
 it('throws an exception when the migratable attributes properly is not defined', function () {
     $model = new class () extends Model {
-        use Migratable;
+        use MigratesModel;
 
         protected $targetModel = Model::class;
     };

@@ -2,9 +2,9 @@
 
 namespace HSkrasek\ModelMigrator\Commands;
 
+use HSkrasek\ModelMigrator\Contracts\Migratable;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use Illuminate\Database\Eloquent\Model;
 
 class ModelMigratorCommand extends Command
 {
@@ -19,7 +19,7 @@ class ModelMigratorCommand extends Command
 
     public function handle(): int
     {
-        dd($this->getLaravel()->environment());
+        // dd($this->getLaravel()->environment());
 
         if (!$this->confirmToProceed()) {
             return self::FAILURE;
@@ -44,10 +44,8 @@ class ModelMigratorCommand extends Command
         }
 
         $class::chunk($chunkSize, function (array $models, int $page) use ($modelName, $chunkSize): bool {
-            /** @var array<int, Model> $models */
+            /** @var array<int, Migratable> $models */
             foreach ($models as $model) {
-                // TODO: Implement something that allows better type hinting/inference
-                /** @phpstan-ignore-next-line */
                 if (!$model->migrateAndSave()) {
                     return false;
                 }
