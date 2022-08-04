@@ -18,4 +18,8 @@ interface Migratable
     public function migrate(): Model;
 
     public function migrateAndSave(): bool;
+
+    //TODO: Determine how to handle updates with migratable models
+    //What is the method name?
+    public function migrateChanges(): Model;
 }
